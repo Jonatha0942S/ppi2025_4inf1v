@@ -1,5 +1,5 @@
 import styles from "./Header.module.css";
-import img from "../assets/img/apple.png";
+import img from "../assets/img/Brasaomacau.png";
 
 export function Header() {
   return (
@@ -7,10 +7,10 @@ export function Header() {
       <div className={styles.centralContainer}>
         <div className={styles.containerImg}>
           <img src={img}
-          alt="Foco, Força e Fé"
+          alt="Macau"
           />
         </div>
-        <h1 className={styles.tema}>Foco, Força e Fé</h1>
+        <h1 className={styles.tema}>Macau - Cidade do Sal</h1>
       </div>
     </header>
   );
