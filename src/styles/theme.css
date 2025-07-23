@@ -1,4 +1,21 @@
 :root {
+  --primary: #43a047;              /* Verde principal */
+  --primary-light: #a5d6a7;        /* Verde claro */
+  --primary-dark: #1b5e20;         /* Verde escuro */
+  --primary-contrast-light: #e8f5e9; /* Contraste claro, verde bem suave */
+  --primary-contrast-dark: #133016;  /* Contraste escuro, verde profundo */
+  
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+}
+/* :root {
   --primary: #f49097;
   --primary-light: #fcd6da;
   --primary-dark: #a04e56;
@@ -14,4 +31,4 @@
   --gray-700: #495057;
   --gray-800: #343a40;
   --gray-900: #212529;
-}
+} */
