@@ -1,39 +1,55 @@
-import { useEffect, useState } from "react";
 import styles from "./ProductList.module.css";
 import { CircularProgress } from "@mui/material";
 import { Product } from "./Product";
-import { useContext, useRef } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { CartContext } from "../service/CartContext";
 
 export function ProductList() {
-
+  
   const { products, loading, error } = useContext(CartContext);
 
-  const searchImput = useRef(null);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const searchInput = useRef(null);
+
+  useEffect(() => {
+    if(products) {
+      setFilteredProducts(products);
+    }
+  }, [products]);
 
   function handleSearch() {
-    const query = searchImput.current.value.toLowerCase();
-    console.log("Search query:", query);
+    const query = searchInput.current.value.toLowerCase();
+    setFilteredProducts(
+      products.filter((product) =>
+        product.title.toLowerCase().includes(query) || 
+        product.description.toLowerCase().includes(query)
+      )
+    );
   }
 
   function handleClear() {
-    searchImput.current.value = "";
+    searchInput.current.value = "";
+    setFilteredProducts(products);
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.searchContainer}>
         <input
+          ref={searchInput}
           type="text"
           placeholder="Search products..."
-          ref={searchImput}
+          className={styles.searchInput}
           onChange={handleSearch}
         />
-        <button className={styles.searchButton} onClick={handleClear}>Clear</button>
+        <button className={styles.searchButton} onClick={handleClear}>
+          CLEAR
+        </button>
       </div>
       <div className={styles.productList}>
-        {products.map((product) => (
-          <Product key={product.id} product={product} addToCart={addToCart} />
+        {filteredProducts.map((product) => (
+          <Product key={product.id} product={product} />
         ))}
       </div>
       {loading && (

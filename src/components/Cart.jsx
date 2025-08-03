@@ -1,107 +1,57 @@
-import { useState } from "react";
 import styles from "./Cart.module.css";
+import { useContext } from "react";
+import { CartContext } from "../service/CartContext";
+import { Trash } from "lucide-react";
 
-export function Cart({ cart, setCart, clearCart }) {
-  
-  const grouped = cart.reduce((acc, item) => {
-    if (!acc[item.id]) {
-      acc[item.id] = { ...item, quantity: 1 };
-    } else {
-      acc[item.id].quantity += 1;
-    }
-    return acc;
-  }, {});
-  const products = Object.values(grouped);
-
-  function increaseQty(id) {
-    const product = cart.find((p) => p.id === id);
-    setCart([...cart, product]);
-  }
-
-  function decreaseQty(id) {
-    const idx = cart.findIndex((p) => p.id === id);
-    if (idx !== -1) {
-      const newCart = [...cart];
-      newCart.splice(idx, 1);
-      setCart(newCart);
-    }
-  }
-
-  function removeItem(id) {
-    setCart(cart.filter((p) => p.id !== id));
-  }
+export function Cart() {
+  const { cart, updateQtyCart, removeFromCart, clearCart } =
+    useContext(CartContext);
 
   return (
-    <div className={styles.cartPage}>
-      <h2 className={styles.title}>Carrinho de Compras</h2>
-      {products.length === 0 ? (
-        <p className={styles.empty}>Seu carrinho está vazio.</p>
+    <div className={styles.cart}>
+      <h2>Shopping Cart</h2>
+      {cart.length === 0 ? (
+        <p>Your cart is empty.</p>
       ) : (
-        <>
-          <button className={styles.clearBtn} onClick={clearCart}>
-            Remover todos os itens
-          </button>
-          <ul className={styles.cartList}>
-            {products.map((product) => (
-              <li key={product.id} className={styles.cartItem}>
-                <img
-                  src={product.thumbnail}
-                  alt={product.title}
-                  className={styles.thumb}
-                />
-                <div className={styles.info}>
-                  <h3>{product.title}</h3>
-                </div>
-                <div className={styles.qtyControl}>
-                  <button
-                    onClick={() => decreaseQty(product.id)}
-                    className={styles.qtyBtn}
-                  >
-                    -
-                  </button>
-                  <span>{product.quantity}</span>
-                  <button
-                    onClick={() => increaseQty(product.id)}
-                    className={styles.qtyBtn}
-                  >
-                    +
-                  </button>
-                </div>
+        <ul>
+          {cart.map((product, index) => (
+            <li key={index} className={styles.cartItem}>
+              <img src={product.thumbnail} alt={product.title} />
+              <h3>{product.title}</h3>
+              <p>${product.price.toFixed(2)}</p>
+              <div className={styles.quantityControls}>
                 <button
-                  onClick={() => removeItem(product.id)}
-                  className={styles.removeBtn}
-                  title="Remover item"
+                  disabled={product.quantity <= 1}
+                  onClick={() =>
+                    updateQtyCart(product.id, product.quantity - 1)
+                  }
                 >
-                  🗑️
+                  -
                 </button>
-              </li>
-            ))}
-          </ul>
-        </>
+                <span>{product.quantity}</span>
+                <button
+                  onClick={() =>
+                    updateQtyCart(product.id, product.quantity + 1)
+                  }
+                >
+                  +
+                </button>
+              </div>
+              <button
+                onClick={() => removeFromCart(product.id)}
+                className={styles.removeButton}
+              >
+                <Trash />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {cart.length > 0 && (
+        <button onClick={clearCart} className={styles.removeButton}>
+          CLEAR CART <Trash />
+        </button>
       )}
     </div>
   );
 }
-
-// import styles from "./Cart.module.css";
-
-// export function Cart({ cart }) {
-//   return (
-//     <div className={styles.cart}>
-//       <h2>Shopping Cart</h2>
-//       {cart.length === 0 ? (
-//         <p>Your cart is empty.</p>
-//       ) : (
-//         <ul>
-//           {cart.map((product, index) => (
-//             <li key={index}>
-//               <img src={product.thumbnail} alt={product.title} />
-//               <h3>{product.title}</h3>
-//               <p>${product.price.toFixed(2)}</p>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//   );
-// }
