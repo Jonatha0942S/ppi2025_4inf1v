@@ -13,7 +13,17 @@ export default function App() {
 
   return (
     <>
+    <TelaLogin />
+    <TelaCadastro />
     <TelaProdutos />
+    {/* <CartProvider>
+      <Header />
+      <Routes>
+        <Route path="/" element={<ProductList />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/produtos" element={<TelaProdutos />} />
+      </Routes>
+    </CartProvider> */}
     </>
   );
 }
