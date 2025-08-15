@@ -5,25 +5,19 @@ import { Header } from "./components/Header";
 import { Route, Routes } from "react-router";
 import { Cart } from "./components/Cart";
 import { CartProvider } from "./service/CartContext";
-import  Login  from "./components/TelaLogin";
-import Cadastro from "./components/TelaCadastro";
-import GerenciarProdutos from "./components/TelaProdutos";
 
 export default function App() {
 
   return (
     <>
-    <Login />
-    <Cadastro />
-    <GerenciarProdutos />
-    {/* <CartProvider>
+    <CartProvider>
       <Header />
       <Routes>
         <Route path="/" element={<ProductList />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/produtos" element={<TelaProdutos />} />
       </Routes>
-    </CartProvider> */}
+    </CartProvider>
     </>
   );
 }
